@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>0000th</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&f[]=azeret-mono@400,500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@900&display=swap" />
+<style>
+  /* =======================================================================
+     0000th — holding page (onepagelove-style)
+     Type   · Epilogue Black (the mark) · Switzer (sans) · Azeret Mono (chrome)
+     Ground · Ink #001a23   Text · Alice #e8f1f2   Accent · Celadon #b3efb2
+     Background · CSS parallax city; drops to assets/cities.mp4 when present.
+     ======================================================================= */
+  :root {
+    --alice:#e8f1f2; --celadon:#b3efb2; --teal:#7a9e7e; --pine:#31493c; --ink:#001a23;
+    --pad: clamp(22px, 4.2vw, 60px);
+    --display:"Epilogue", system-ui, sans-serif;
+    --sans:"Switzer", system-ui, sans-serif;
+    --mono:"Azeret Mono", ui-monospace, "SFMono-Regular", monospace;
+  }
+
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html, body { height:100%; }
+  body {
+    background:var(--ink);
+    color:var(--alice);
+    font-family:var(--sans);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  /* ============================ background ============================ */
+  .cityscape {
+    position:fixed; inset:0; z-index:0; overflow:hidden;
+    background:
+      radial-gradient(130% 90% at 50% 108%, rgba(122,158,126,0.26), rgba(122,158,126,0) 58%),
+      linear-gradient(180deg, #00131a 0%, var(--ink) 46%, #002430 100%);
+  }
+  /* a far horizon glow that breathes */
+  .cityscape::after {
+    content:""; position:absolute; left:50%; bottom:0; transform:translateX(-50%);
+    width:90%; height:42%;
+    background:radial-gradient(60% 100% at 50% 100%, rgba(179,239,178,0.18), rgba(179,239,178,0) 70%);
+    animation:breathe 9s ease-in-out infinite;
+  }
+  @keyframes breathe { 0%,100%{opacity:.6} 50%{opacity:1} }
+
+  .skyline {
+    position:absolute; left:0; bottom:0; width:calc(100% + 3400px);
+    background-repeat:repeat-x; background-position:left bottom;
+    will-change:transform;
+  }
+  /* back towers — tall, dim, slowest; fills the upper frame */
+  .skyline.back {
+    height:92%; opacity:.42;
+    background-image:
+      repeating-linear-gradient(90deg, #0e2832 0 64px, transparent 64px 280px),
+      repeating-linear-gradient(90deg, #0e2832 0 40px, transparent 40px 320px);
+    background-size:auto 100%, auto 74%;
+    animation:driftBack 170s linear infinite;
+  }
+  /* far buildings — dim, slow */
+  .skyline.far {
+    height:60%; opacity:.7;
+    background-image:
+      repeating-linear-gradient(90deg, #16323a 0 46px, transparent 46px 132px),
+      repeating-linear-gradient(90deg, #16323a 0 28px, transparent 28px 96px);
+    background-size:auto 80%, auto 100%;
+    animation:driftFar 120s linear infinite;
+  }
+  /* near buildings — lighter, faster */
+  .skyline.near {
+    height:40%; opacity:.95;
+    background-image:
+      repeating-linear-gradient(90deg, #20424a 0 60px, transparent 60px 150px),
+      repeating-linear-gradient(90deg, #20424a 0 38px, transparent 38px 110px);
+    background-size:auto 100%, auto 62%;
+    animation:driftNear 78s linear infinite;
+  }
+  @keyframes driftBack { to { transform:translateX(-2240px); } }
+  @keyframes driftFar  { to { transform:translateX(-1056px); } }
+  @keyframes driftNear { to { transform:translateX(-1650px); } }
+
+  /* optional real footage — drop assets/cities.mp4 and it fades in on top */
+  .city-video {
+    position:fixed; inset:0; z-index:1;
+    width:100%; height:100%; object-fit:cover;
+    opacity:0; transition:opacity 1.1s ease;
+  }
+  .city-video.ready { opacity:1; }
+
+  /* scrim — keeps mark + contact legible over any background */
+  .scrim {
+    position:fixed; inset:0; z-index:2; pointer-events:none;
+    background:linear-gradient(180deg,
+      rgba(0,19,26,0.62) 0%,
+      rgba(0,19,26,0) 20%,
+      rgba(0,19,26,0) 64%,
+      rgba(0,26,35,0.78) 100%);
+  }
+
+  /* ============================ foreground ============================ */
+  .plate {
+    position:relative; z-index:3;
+    height:100svh; min-height:100%;
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:var(--pad); gap:var(--pad);
+  }
+
+  .masthead { display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
+  .wordmark {
+    font-family:var(--display); font-weight:900;
+    font-size:clamp(64px, 7.6vw, 116px);
+    letter-spacing:-0.03em; color:var(--alice); line-height:0.9;
+  }
+  .wordmark sup {
+    font-size:0.34em; font-weight:900; vertical-align:super;
+    margin-left:0.06em; letter-spacing:-0.01em;
+  }
+
+  .footer {
+    display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+    font-family:var(--mono); font-size:clamp(11px, 0.92vw, 13px); letter-spacing:0.02em;
+  }
+  .contact {
+    color:var(--alice); text-decoration:none; position:relative;
+    padding-bottom:2px; transition:color .35s ease;
+  }
+  .contact::after {
+    content:""; position:absolute; left:0; bottom:0; width:100%; height:1px;
+    background:currentColor; transform:scaleX(0); transform-origin:left;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1);
+  }
+  .contact:hover { color:var(--celadon); }
+  .contact:hover::after { transform:scaleX(1); }
+
+  @media (max-width:560px) {
+    .masthead { flex-direction:column; align-items:flex-start; gap:14px; }
+    .footer { flex-direction:column-reverse; align-items:flex-start; gap:14px; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .skyline, .cityscape::after { animation:none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- background: CSS parallax city (falls back beneath video) -->
+  <div class="cityscape" aria-hidden="true">
+    <div class="skyline back"></div>
+    <div class="skyline far"></div>
+    <div class="skyline near"></div>
+  </div>
+
+  <!-- optional real footage: add assets/cities.mp4 to activate -->
+  <video class="city-video" id="cityVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+    <source src="assets/hero.mp4" type="video/mp4" />
+  </video>
+
+  <div class="scrim" aria-hidden="true"></div>
+
+  <main class="plate" data-screen-label="Holding page — intro">
+
+    <header class="masthead">
+      <div class="wordmark">0000<sup>th</sup></div>
+    </header>
+
+    <footer class="footer">
+      <a class="contact" href="mailto:contact@0000th.ai">contact@0000th.ai</a>
+    </footer>
+
+  </main>
+
+  <script>
+    // reveal real footage only once it actually has data; otherwise CSS city stays
+    (function () {
+      var v = document.getElementById('cityVideo');
+      if (!v) return;
+      v.addEventListener('loadeddata', function () {
+        if (v.videoWidth > 0) v.classList.add('ready');
+      });
+      v.addEventListener('error', function () { v.style.display = 'none'; }, true);
+    })();
+  </script>
+
+</body>
+</html>
